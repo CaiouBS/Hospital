@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+// kaua e viado
+
 
 typedef struct Medico
 {
