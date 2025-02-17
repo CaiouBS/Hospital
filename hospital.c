@@ -123,6 +123,12 @@ void atualizarMedico(ListaMedicos *listaDMedicos)
         if (atualizar->id == id)
         {
             printf("\n");
+            printf("Dados atuais do medico:\n");
+            printf("ID: %d\n", atualizar->id);
+            printf("Nome: %s\n", atualizar->nome);
+            printf("Especialidade: %s\n", atualizar->especialidade);
+            printf("--------------------\n");
+
             printf("Digite os dados atualizados: \n");
             printf("ID: ");
             scanf("%d", &atualizar->id);
@@ -133,6 +139,13 @@ void atualizarMedico(ListaMedicos *listaDMedicos)
             printf("Especialidade: ");
             fgets(atualizar->especialidade, 50, stdin);
             atualizar->especialidade[strcspn(atualizar->especialidade, "\n")] = '\0';
+
+            printf("Dados atualizados do medico:\n");
+            printf("ID: %d\n", atualizar->id);
+            printf("Nome: %s\n", atualizar->nome);
+            printf("Especialidade: %s\n", atualizar->especialidade);
+            printf("--------------------\n");
+
             printf("Medico atualizado com sucesso!\n");
             return;
         }
@@ -277,41 +290,6 @@ void procurarPaciente(ListaPacientes *lista)
     printf("Paciente nao encontrado!\n");
 }
 
-void excluirPaciente(ListaPacientes *lista)
-{
-    int id;
-    printf("Digite o id do paciente que deseja excluir: ");
-    scanf("%d", &id);
-
-    Paciente *atual = lista->pacientes;
-    Paciente *anterior = NULL;
-
-    while (atual != NULL)
-    {
-        if (atual->id == id)
-        {
-            if (anterior == NULL)
-            {
-                lista->pacientes = atual->prox;
-            }
-            else
-            {
-                anterior->prox = atual->prox;
-            }
-
-            free(atual);
-            lista->tamanho--;
-            printf("Paciente excluido com sucesso!\n");
-            return;
-        }
-
-        anterior = atual;
-        atual = atual->prox;
-    }
-
-    printf("Paciente nao encontrado!\n");
-}
-
 void atualizarPaciente(ListaPacientes *listaP)
 {
     int idP;
@@ -325,29 +303,48 @@ void atualizarPaciente(ListaPacientes *listaP)
         if (atualizar->id == idP)
         {
             printf("\n");
-            printf("Digite o nome do paciente: \n");
+            printf("Dados atuais do paciente:\n");
+            printf("ID: %d\n", atualizar->id);
+            printf("Nome: %s\n", atualizar->nome);
+            printf("Idade: %d\n", atualizar->idade);
+            printf("Sexo: %s\n", atualizar->sexo);
+            printf("Endereco: %s\n", atualizar->endereco);
+            printf("Telefone: %s\n", atualizar->telefone);
+            printf("-------------------\n");
+
+            printf("Digite os dados atualizados: \n");
+            printf("Nome: ");
             fgets(atualizar->nome, 50, stdin);
             atualizar->nome[strcspn(atualizar->nome, "\n")] = '\0';
 
-            printf("Digite o ID: \n");
+            printf("ID: ");
             scanf("%d", &atualizar->id);
             getchar();
 
-            printf("Digite a idade: \n");
+            printf("Idade: ");
             scanf("%d", &atualizar->idade);
             getchar();
 
-            printf("Digite o sexo: \n");
+            printf("Sexo: ");
             fgets(atualizar->sexo, 15, stdin);
             atualizar->sexo[strcspn(atualizar->sexo, "\n")] = '\0';
 
-            printf("Digite o endereco: \n");
+            printf("Endereco: ");
             fgets(atualizar->endereco, 100, stdin);
             atualizar->endereco[strcspn(atualizar->endereco, "\n")] = '\0';
 
-            printf("Digite o telefone: \n");
+            printf("Telefone: ");
             fgets(atualizar->telefone, 30, stdin);
             atualizar->telefone[strcspn(atualizar->telefone, "\n")] = '\0';
+
+            printf("Dados atualizados do paciente:\n");
+            printf("ID: %d\n", atualizar->id);
+            printf("Nome: %s\n", atualizar->nome);
+            printf("Idade: %d\n", atualizar->idade);
+            printf("Sexo: %s\n", atualizar->sexo);
+            printf("Endereco: %s\n", atualizar->endereco);
+            printf("Telefone: %s\n", atualizar->telefone);
+            printf("-------------------\n");
 
             printf("Paciente atualizado com sucesso!\n");
             return;
@@ -641,6 +638,16 @@ void atualizarConsulta(ListaConsulta *listaC)
     {
         if (atualizar->numero == numero)
         {
+            // Mostra os dados antigos da consulta
+            printf("Dados atuais da consulta:\n");
+            printf("Numero: %d\n", atualizar->numero);
+            printf("Medico: %s (ID: %d)\n", atualizar->medico->nome, atualizar->medico->id);
+            printf("Paciente: %s (ID: %d)\n", atualizar->paciente->nome, atualizar->paciente->id);
+            printf("Data: %s\n", atualizar->data);
+            printf("Horario: %s\n", atualizar->horario);
+            printf("Duracao: %s\n", atualizar->duracao);
+            printf("-----------------------\n");
+
             // Lê o novo número da consulta
             printf("Digite o novo numero da consulta: ");
             scanf("%d", &atualizar->numero);
@@ -711,6 +718,16 @@ void atualizarConsulta(ListaConsulta *listaC)
             fgets(atualizar->duracao, 20, stdin);
             atualizar->duracao[strcspn(atualizar->duracao, "\n")] = '\0';
 
+            // Mostra os dados atualizados da consulta
+            printf("Dados atualizados da consulta:\n");
+            printf("Numero: %d\n", atualizar->numero);
+            printf("Medico: %s (ID: %d)\n", atualizar->medico->nome, atualizar->medico->id);
+            printf("Paciente: %s (ID: %d)\n", atualizar->paciente->nome, atualizar->paciente->id);
+            printf("Data: %s\n", atualizar->data);
+            printf("Horario: %s\n", atualizar->horario);
+            printf("Duracao: %s\n", atualizar->duracao);
+            printf("-----------------------\n");
+
             // Retorna após atualizar a consulta
             return;
         }
@@ -719,6 +736,203 @@ void atualizarConsulta(ListaConsulta *listaC)
 
     // Se a consulta não foi encontrada, imprime uma mensagem de erro
     printf("Consulta nao encontrada!\n");
+}
+
+void excluirConsulta(ListaConsulta *listaC)
+{
+    int numero;
+    printf("Digite o numero da consulta que deseja excluir: ");
+    scanf("%d", &numero);
+
+    Consulta *atual = listaC->consultas;
+    Consulta *anterior = NULL;
+
+    while (atual != NULL)
+    {
+        if (atual->numero == numero)
+        {
+            if (anterior == NULL)
+            {
+                listaC->consultas = atual->prox;
+            }
+            else
+            {
+                anterior->prox = atual->prox;
+            }
+
+            printf("Consulta excluida: \n");
+            printf("Numero: %d\n", atual->numero);
+            printf("Medico: %s (ID: %d)\n", atual->medico->nome, atual->medico->id);
+            printf("Paciente: %s (ID: %d)\n", atual->paciente->nome, atual->paciente->id);
+            printf("Data: %s\n", atual->data);
+            printf("Horario: %s\n", atual->horario);
+            printf("Duracao: %s\n", atual->duracao);
+            printf("-----------------------\n");
+
+            free(atual);
+            listaC->tamanho--;
+            return;
+        }
+
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    printf("Consulta nao encontrada!\n");
+}
+
+void excluirMedico(ListaMedicos *listaM, ListaConsulta *listaC)
+{
+    int id;
+    printf("Digite o id do medico que deseja excluir: ");
+    scanf("%d", &id);
+
+    Medico *atual = listaM->medicos;
+    Medico *anterior = NULL;
+
+    while (atual != NULL)
+    {
+        if (atual->id == id)
+        {
+            if (anterior == NULL)
+            {
+                listaM->medicos = atual->proximo;
+            }
+            else
+            {
+                anterior->proximo = atual->proximo;
+            }
+
+            printf("Medico excluido: \n");
+            printf("ID: %d\n", atual->id);
+            printf("Nome: %s\n", atual->nome);
+            printf("Especialidade: %s\n", atual->especialidade);
+            printf("--------------------\n");
+
+            // Excluir consultas do médico excluído
+            Consulta *consultaAtual = listaC->consultas;
+            Consulta *consultaAnterior = NULL;
+            while (consultaAtual != NULL)
+            {
+                if (consultaAtual->medico->id == id)
+                {
+                    if (consultaAnterior == NULL)
+                    {
+                        listaC->consultas = consultaAtual->prox;
+                    }
+                    else
+                    {
+                        consultaAnterior->prox = consultaAtual->prox;
+                    }
+
+                    printf("Consulta excluida: \n");
+                    printf("Numero: %d\n", consultaAtual->numero);
+                    printf("Medico: %s (ID: %d)\n", consultaAtual->medico->nome, consultaAtual->medico->id);
+                    printf("Paciente: %s (ID: %d)\n", consultaAtual->paciente->nome, consultaAtual->paciente->id);
+                    printf("Data: %s\n", consultaAtual->data);
+                    printf("Horario: %s\n", consultaAtual->horario);
+                    printf("Duracao: %s\n", consultaAtual->duracao);
+                    printf("-----------------------\n");
+
+                    free(consultaAtual);
+                    listaC->tamanho--;
+                }
+                else
+                {
+                    consultaAnterior = consultaAtual;
+                }
+                consultaAtual = consultaAtual->prox;
+            }
+
+            free(atual);
+            listaM->tamanho--;
+            return;
+        }
+
+        anterior = atual;
+        atual = atual->proximo;
+    }
+
+    printf("Medico nao encontrado!\n");
+}
+
+void excluirPaciente(ListaPacientes *listaP, ListaConsulta *listaC)
+{
+    int id;
+    printf("Digite o id do paciente que deseja excluir: ");
+    scanf("%d", &id);
+
+    Paciente *atual = listaP->pacientes;
+    Paciente *anterior = NULL;
+
+    while (atual != NULL)
+    {
+        if (atual->id == id)
+        {
+            if (anterior == NULL)
+            {
+                listaP->pacientes = atual->prox;
+            }
+            else
+            {
+                anterior->prox = atual->prox;
+            }
+
+            printf("Paciente excluido: \n");
+            printf("ID: %d\n", atual->id);
+            printf("Nome: %s\n", atual->nome);
+            printf("Idade: %d\n", atual->idade);
+            printf("Sexo: %s\n", atual->sexo);
+            printf("Endereco: %s\n", atual->endereco);
+            printf("Telefone: %s\n", atual->telefone);
+            printf("-------------------\n");
+
+            // Excluir consultas do paciente excluído
+            Consulta *consultaAtual = listaC->consultas;
+            Consulta *consultaAnterior = NULL;
+            while (consultaAtual != NULL)
+            {
+                if (consultaAtual->paciente->id == id)
+                {
+                    if (consultaAnterior == NULL)
+                    {
+                        listaC->consultas = consultaAtual->prox;
+                    }
+                    else
+                    {
+                        consultaAnterior->prox = consultaAtual->prox;
+                    }
+
+                    printf("Consulta excluida: \n");
+                    printf("Numero: %d\n", consultaAtual->numero);
+                    printf("Medico: %s (ID: %d)\n", consultaAtual->medico->nome, consultaAtual->medico->id);
+                    printf("Paciente: %s (ID: %d)\n", consultaAtual->paciente->nome, consultaAtual->paciente->id);
+                    printf("Data: %s\n", consultaAtual->data);
+                    printf("Horario: %s\n", consultaAtual->horario);
+                    printf("Duracao: %s\n", consultaAtual->duracao);
+                    printf("-----------------------\n");
+
+                    free(consultaAtual);
+                    listaC->tamanho--;
+                }
+                else
+                {
+                    consultaAnterior = consultaAtual;
+                }
+                consultaAtual = consultaAtual->prox;
+            }
+
+            free(atual);
+            listaP->tamanho--;
+            printf("Paciente excluido com sucesso!\n");
+            return;
+        }
+
+        anterior = atual;
+        atual = atual->prox;
+    }
+
+    printf("Paciente nao encontrado!\n");
 }
 
 int main()
@@ -768,7 +982,8 @@ int main()
                 printf("2. | Exibir Medicos\n");
                 printf("3. | Procurar Medico\n");
                 printf("4. | Atualizar Medico\n");
-                printf("5. | Voltar\n");
+                printf("5. | Excluir Medico\n");
+                printf("6. | Voltar\n");
                 printf("Digite uma opcao: ");
                 scanf("%d", &opcaoMedico);
                 printf("\n");
@@ -789,13 +1004,16 @@ int main()
                     atualizarMedico(&listaM);
                     break;
                 case 5:
+                    excluirMedico(&listaM, &listaC);
+                    break;
+                case 6:
                     break;
                 default:
                     printf("Opcao invalida!\n");
                     break;
                 }
 
-            } while (opcaoMedico != 5);
+            } while (opcaoMedico != 6);
             break;
 
         case 2:
@@ -810,7 +1028,8 @@ int main()
                 printf("2. | Exibir pacientes\n");
                 printf("3. | Procurar paciente\n");
                 printf("4. | Atualizar paciente\n");
-                printf("5. | Voltar\n");
+                printf("5. | Exluir pacientes\n");
+                printf("6. | Voltar\n");
                 printf("Digite uma opcao: ");
                 scanf("%d", &opcaoPaciente);
                 printf("\n");
@@ -831,13 +1050,16 @@ int main()
                     atualizarPaciente(&listaP);
                     break;
                 case 5:
+                    excluirPaciente(&listaP, &listaC);
+                    break;
+                case 6:
                     break;
                 default:
                     printf("Opcao invalida!\n");
                     break;
                 }
 
-            } while (opcaoPaciente != 5);
+            } while (opcaoPaciente != 6);
             break;
 
         case 3:
@@ -852,7 +1074,8 @@ int main()
                 printf("2. | Exibir Consultas\n");
                 printf("3. | Procurar Consultas\n");
                 printf("4. | Atualizar Consulta\n");
-                printf("5. | Voltar\n");
+                printf("5. | Excluir Consulta\n");
+                printf("6. | Voltar\n");
                 printf("Digite uma opcao: ");
                 scanf("%d", &opcaoConsulta);
                 printf("\n");
@@ -873,12 +1096,15 @@ int main()
                     atualizarConsulta(&listaC);
                     break;
                 case 5:
+                    excluirConsulta(&listaC);
+                    break;
+                case 6:
                     break;
                 default:
                     printf("Opcao invalida!\n");
                     break;
                 }
-            } while (opcaoConsulta != 5);
+            } while (opcaoConsulta != 6);
             break;
         case 4:
 
