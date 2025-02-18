@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -158,7 +159,7 @@ typedef struct Paciente
 {
     char nome[50];
     int id;
-    int idade;
+    char identidade[30];
     char sexo[15];
     char endereco[100];
     char telefone[30];
@@ -179,7 +180,7 @@ void iniciarListaPacientes(ListaPacientes *lista)
     lista->tamanho = 0;
 }
 
-Paciente *CriarPaciente(int id, const char *nome, int idade, const char *sexo, const char *endereco, const char *telefone)
+Paciente *CriarPaciente(int id, const char *nome, const char *identidade, const char *sexo, const char *endereco, const char *telefone)
 {
     struct Paciente *novoPaciente = (struct Paciente *)malloc(sizeof(struct Paciente));
     if (novoPaciente == NULL)
@@ -190,7 +191,7 @@ Paciente *CriarPaciente(int id, const char *nome, int idade, const char *sexo, c
 
     novoPaciente->id = id;
     strcpy(novoPaciente->nome, nome);
-    novoPaciente->idade = idade;
+    strcpy(novoPaciente->identidade, identidade);
     strcpy(novoPaciente->sexo, sexo);
     strcpy(novoPaciente->endereco, endereco);
     strcpy(novoPaciente->telefone, telefone);
@@ -200,7 +201,7 @@ Paciente *CriarPaciente(int id, const char *nome, int idade, const char *sexo, c
 
 void incluirPaciente(ListaPacientes *lista)
 {
-    Paciente *novoPaciente = CriarPaciente(0, "", 0, "", "", "");
+    Paciente *novoPaciente = CriarPaciente(0, "", "", "", "", "");
 
     printf("Digite o nome do Paciente: ");
     fgets(novoPaciente->nome, 50, stdin);
@@ -208,17 +209,18 @@ void incluirPaciente(ListaPacientes *lista)
 
     printf("Digite o id do Paciente: ");
     scanf("%d", &novoPaciente->id);
+    getchar();
 
-    printf("Digite a idade do paciente: ");
-    scanf("%d", &novoPaciente->idade);
-
-    getchar(); // limpar o buffer de entrada
+    printf("Digite a identidade do paciente: ");
+    fgets(novoPaciente->identidade, 30, stdin);
+    novoPaciente->identidade[strcspn(novoPaciente->identidade, "\n")] = '\0';
 
     printf("Digite o sexo do paciente: ");
     fgets(novoPaciente->sexo, 10, stdin);
     novoPaciente->sexo[strcspn(novoPaciente->sexo, "\n")] = '\0';
 
     printf("Digite o endereco do paciente: ");
+    getchar();
     fgets(novoPaciente->endereco, 100, stdin);
     novoPaciente->endereco[strcspn(novoPaciente->endereco, "\n")] = '\0';
 
@@ -253,7 +255,7 @@ void exibirPacientes(ListaPacientes *lista)
     {
         printf("ID: %d\n", atual->id);
         printf("Nome: %s\n", atual->nome);
-        printf("Idade: %d\n", atual->idade);
+        printf("Identidade: %s\n", atual->identidade);
         printf("Sexo: %s\n", atual->sexo);
         printf("Endereco: %s\n", atual->endereco);
         printf("Telefone: %s\n", atual->telefone);
@@ -278,7 +280,7 @@ void procurarPaciente(ListaPacientes *lista)
             printf("\n");
             printf("ID: %d\n", atual->id);
             printf("Nome: %s\n", atual->nome);
-            printf("idade: %d\n", atual->idade);
+            printf("Identidade: %s\n", atual->identidade);
             printf("Sexo: %s\n", atual->sexo);
             printf("Endereco: %s\n", atual->endereco); // precisa do return e tem que chamar o proximo
             printf("Telefone: %s\n", atual->telefone);
@@ -306,7 +308,7 @@ void atualizarPaciente(ListaPacientes *listaP)
             printf("Dados atuais do paciente:\n");
             printf("ID: %d\n", atualizar->id);
             printf("Nome: %s\n", atualizar->nome);
-            printf("Idade: %d\n", atualizar->idade);
+            printf("Identidade: %s\n", atualizar->identidade);
             printf("Sexo: %s\n", atualizar->sexo);
             printf("Endereco: %s\n", atualizar->endereco);
             printf("Telefone: %s\n", atualizar->telefone);
@@ -321,9 +323,9 @@ void atualizarPaciente(ListaPacientes *listaP)
             scanf("%d", &atualizar->id);
             getchar();
 
-            printf("Idade: ");
-            scanf("%d", &atualizar->idade);
-            getchar();
+            printf("Identidade: ");
+            fgets(atualizar->identidade, 30, stdin);
+            atualizar->identidade[strcspn(atualizar->identidade, "\n")] = '\0';
 
             printf("Sexo: ");
             fgets(atualizar->sexo, 15, stdin);
@@ -340,7 +342,7 @@ void atualizarPaciente(ListaPacientes *listaP)
             printf("Dados atualizados do paciente:\n");
             printf("ID: %d\n", atualizar->id);
             printf("Nome: %s\n", atualizar->nome);
-            printf("Idade: %d\n", atualizar->idade);
+            printf("Identidade: %s\n", atualizar->identidade);
             printf("Sexo: %s\n", atualizar->sexo);
             printf("Endereco: %s\n", atualizar->endereco);
             printf("Telefone: %s\n", atualizar->telefone);
@@ -549,7 +551,7 @@ void procurarRelatorioPorMedico(ListaConsulta *listaC)
         }
         atual = atual->prox;
     }
-    if(encontrou == 0)
+    if (encontrou == 0)
         printf("Consulta nao encontrada!\n");
     else
         printf("Consulta(s) encontrada(s)!\n");
@@ -579,7 +581,7 @@ void procurarRelatorioPorPaciente(ListaConsulta *listaC)
         }
         atual = atual->prox;
     }
-    if(encontrou == 0)
+    if (encontrou == 0)
         printf("Consulta nao encontrada!\n");
     else
         printf("Consulta(s) encontrada(s)!\n");
@@ -881,7 +883,7 @@ void excluirPaciente(ListaPacientes *listaP, ListaConsulta *listaC)
             printf("Paciente excluido: \n");
             printf("ID: %d\n", atual->id);
             printf("Nome: %s\n", atual->nome);
-            printf("Idade: %d\n", atual->idade);
+            printf("Identidade: %s\n", atual->identidade);
             printf("Sexo: %s\n", atual->sexo);
             printf("Endereco: %s\n", atual->endereco);
             printf("Telefone: %s\n", atual->telefone);
@@ -1108,7 +1110,8 @@ int main()
             break;
         case 4:
 
-            do {
+            do
+            {
                 printf("\n");
                 printf("~~ Hospital Bertolato Faria ~~");
                 printf("\n");
@@ -1142,7 +1145,7 @@ int main()
                 }
             } while (opcaoRelatorio != 4);
             break;
-            
+
         case 5:
             printf("Saindo...\n");
             exit(1);
